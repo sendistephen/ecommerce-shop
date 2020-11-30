@@ -1,0 +1,30 @@
+{
+  "name": "ecommerce-shop-api",
+  "version": "1.0.0",
+  "description": "An ecommerce shop where users can search through a list of available products and order them online",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sendistephen/ecommerce-shop-api.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "api",
+    "express",
+    "jwt",
+    "token"
+  ],
+  "author": "Stephen Ssendikadiwa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sendistephen/ecommerce-shop-api/issues"
+  },
+  "homepage": "https://github.com/sendistephen/ecommerce-shop-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.18"
+  }
+}
