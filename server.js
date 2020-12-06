@@ -5,6 +5,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const databaseConnection = require('./config/database');
 const errorHandler = require('./middleware/error');
+const expressValidator = require('express-validator');
 
 const app = express();
 
@@ -18,7 +19,11 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(cors());
+app.use(expressValidator());
+
+// mount routes
 app.use('/api/v1', require('./routes/product'));
+
 // error middleware
 app.use(errorHandler);
 
