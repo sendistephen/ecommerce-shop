@@ -1,10 +1,33 @@
+const ErrorResponse = require('../utils/errorResponse');
+
 // custom express error middleware for handling errors
 const errorHandler = (err, req, res, next) => {
+  let error = { ...err };
+  error.message = err.message;
+
   // log to console for development
-  console.log(err.stack);
-  res.status(err.statusCode || 500).json({
+  console.log(err);
+
+  // mongoose bad objectId
+  if (err.name === 'CastError') {
+    const message = `Resource not found.`;
+    error = new ErrorResponse(message, 404);
+  }
+  // mongoose duplicate key
+  if (err.code === 11000) {
+    const message = 'Duplicate field value entered';
+    error = new ErrorResponse(message, 400);
+  }
+
+  // Mongoose validation error
+  if (err.name === 'ValidationError') {
+    const message = Object.values(err.errors).map(val => val.message);
+    error = new ErrorResponse(message, 400);
+  }
+
+  res.status(error.statusCode || 500).json({
     success: false,
-    error: err.message || 'Server error',
+    error: error.message || 'Server error',
   });
 };
 
