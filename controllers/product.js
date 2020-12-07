@@ -15,6 +15,6 @@ exports.create = asyncHandler(async (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.status(200).json(product);
+    res.json(result);
   });
 });
