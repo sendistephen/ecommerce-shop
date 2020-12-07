@@ -23,6 +23,7 @@ app.use(expressValidator());
 
 // mount routes
 app.use('/api/v1', require('./routes/product'));
+app.use('/api/v1', require('./routes/category'));
 
 // error middleware
 app.use(errorHandler);
