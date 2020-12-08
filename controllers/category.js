@@ -21,3 +21,24 @@ exports.create = asyncHandler(async (req, res, next) => {
     res.json(result);
   });
 });
+
+// update category
+exports.update = asyncHandler(async (req, res, next) => {
+  // find if category exists
+  const { type } = req.body;
+
+  const category = await Category.findById(req.params.id);
+
+  if (category) {
+    category.type = type;
+  }
+
+  // save category
+  await category.save((err, result) => {
+    if (err) {
+      return next(err);
+    } else {
+      res.json(result);
+    }
+  });
+});
