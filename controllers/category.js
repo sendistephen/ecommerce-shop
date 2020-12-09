@@ -31,14 +31,33 @@ exports.update = asyncHandler(async (req, res, next) => {
 
   if (category) {
     category.type = type;
+    // save category
+    await category.save((err, result) => {
+      if (err) {
+        return next(err);
+      } else {
+        res.json(result);
+      }
+    });
+  } else {
+    res.status(404);
+    throw new Error('Category not found');
   }
+});
 
-  // save category
-  await category.save((err, result) => {
-    if (err) {
-      return next(err);
-    } else {
-      res.json(result);
-    }
-  });
+// delete single category
+exports.remove = asyncHandler(async (req, res, next) => {
+  // find a category by id
+  const category = await Category.findById(req.params.id);
+  if (category) {
+    await category.remove((err, result) => {
+      if (err) {
+        return next(err);
+      }
+      res.json({ messsage: 'Category removed' });
+    });
+  } else {
+    res.status(404);
+    throw new Error('Category not found');
+  }
 });
