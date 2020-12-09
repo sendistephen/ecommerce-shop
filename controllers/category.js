@@ -61,3 +61,14 @@ exports.remove = asyncHandler(async (req, res, next) => {
     throw new Error('Category not found');
   }
 });
+
+// get all categories
+exports.list = asyncHandler(async (req, res, next) => {
+  await Category.find({}).exec((err, data) => {
+    if (err) {
+      return next(err);
+    } else {
+      res.json(data);
+    }
+  });
+});
