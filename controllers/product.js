@@ -18,3 +18,14 @@ exports.create = asyncHandler(async (req, res, next) => {
     res.json(result);
   });
 });
+
+// Get all products
+exports.list = asyncHandler(async (req, res, next) => {
+  await Product.find({}).exec((err, data) => {
+    if (err) {
+      return next(err);
+    } else {
+      res.json(data);
+    }
+  });
+});
