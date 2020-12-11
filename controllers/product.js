@@ -29,3 +29,15 @@ exports.list = asyncHandler(async (req, res, next) => {
     }
   });
 });
+
+// get single product
+exports.getProductById = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.productId).exec(
+    (err, result) => {
+      if (err || !product) {
+        return next(err);
+      }
+      res.json(result);
+    },
+  );
+});
