@@ -22,6 +22,7 @@ app.use(cors());
 // mount routes
 app.use('/api/v1', require('./routes/product'));
 app.use('/api/v1', require('./routes/category'));
+app.use('/api/v1', require('./routes/owner'));
 
 // error middleware
 app.use(errorHandler);

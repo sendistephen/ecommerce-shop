@@ -42,6 +42,7 @@ exports.update = asyncHandler(async (req, res, next) => {
         price: req.body.price,
         stockQuantity: req.body.stockQuantity,
         category: req.body.categoryId,
+        owner: req.body.ownerId,
       },
     },
     { upsert: true },
