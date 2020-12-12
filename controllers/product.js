@@ -50,6 +50,15 @@ exports.update = asyncHandler(async (req, res, next) => {
         return next(err);
       }
       res.json({ success: true, result });
+
+// get single product
+exports.getProductById = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.productId).exec(
+    (err, result) => {
+      if (err || !product) {
+        return next(err);
+      }
+      res.json(result);
     },
   );
 });
