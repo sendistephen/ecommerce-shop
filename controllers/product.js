@@ -30,6 +30,27 @@ exports.list = asyncHandler(async (req, res, next) => {
   });
 });
 
+// update product
+exports.update = asyncHandler(async (req, res, next) => {
+  await Product.findOneAndUpdate(
+    { _id: req.params.productId },
+    {
+      $set: {
+        title: req.body.title,
+        description: req.body.description,
+        photo: req.file.location,
+        price: req.body.price,
+        stockQuantity: req.body.stockQuantity,
+        category: req.body.categoryId,
+      },
+    },
+    { upsert: true },
+    (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      res.json({ success: true, result });
+
 // get single product
 exports.getProductById = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.productId).exec(
