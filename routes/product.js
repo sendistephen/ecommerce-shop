@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { create, list } = require('../controllers/product');
+const { create, list, update } = require('../controllers/product');
 const upload = require('../middleware/upload-photo');
 const { runValidation } = require('../validator');
 const { productCreateValidator } = require('../validator/product');
@@ -13,4 +13,5 @@ router.post(
   create,
 );
 router.get('/products', list);
+router.put('/product/:productId', upload.single('photo'), update);
 module.exports = router;
