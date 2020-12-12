@@ -50,15 +50,29 @@ exports.update = asyncHandler(async (req, res, next) => {
         return next(err);
       }
       res.json({ success: true, result });
+    },
+  );
+});
 
 // get single product
 exports.getProductById = asyncHandler(async (req, res, next) => {
-  const product = await Product.findById(req.params.productId).exec(
-    (err, result) => {
-      if (err || !product) {
-        return next(err);
-      }
-      res.json(result);
-    },
-  );
+  const product = await Product.findById(req.params.productId);
+  if (!product) {
+    res.status(404);
+    throw new Error('Product not found');
+  } else {
+    res.json(product);
+  }
+});
+
+// delete product
+exports.remove = asyncHandler(async (req, res) => {
+  const product = await Product.findById({ _id: req.params.productId });
+  if (product) {
+    await product.remove();
+    res.json({ success: true, message: 'Product removed' });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
 });
