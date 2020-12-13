@@ -29,3 +29,15 @@ exports.list = asyncHandler(async (req, res, next) => {
     res.json(result);
   });
 });
+
+// delete owner
+exports.remove = asyncHandler(async (req, res, next) => {
+  const owner = await Owner.findById(req.params.ownerId);
+  if (!owner) {
+    res.status(400);
+    throw new Error('Owner not found');
+  } else {
+    await owner.remove();
+    res.json({ success: true, message: 'Owner removed' });
+  }
+});
