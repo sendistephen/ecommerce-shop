@@ -19,3 +19,13 @@ exports.create = asyncHandler(async (req, res, next) => {
     });
   }
 });
+
+// Get all owners
+exports.list = asyncHandler(async (req, res, next) => {
+  await Owner.find({}).exec((err, result) => {
+    if (err) {
+      return next(err);
+    }
+    res.json(result);
+  });
+});
