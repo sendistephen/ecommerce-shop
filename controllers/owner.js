@@ -41,3 +41,24 @@ exports.remove = asyncHandler(async (req, res, next) => {
     res.json({ success: true, message: 'Owner removed' });
   }
 });
+
+//  Updates a specific owner
+exports.update = asyncHandler(async (req, res, next) => {
+  await Owner.findOneAndUpdate(
+    { _id: req.params.ownerId },
+    {
+      $set: {
+        name: req.body.name,
+        about: req.body.about,
+        photo: req.file.location,
+      },
+    },
+    { upsert: true },
+    (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      res.json({ success: true, result });
+    },
+  );
+});
