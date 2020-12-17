@@ -6,8 +6,8 @@ exports.create = asyncHandler(async (req, res) => {
   if (!req.body.email || !req.body.password) {
     res.json({ success: false, message: 'Please enter email and password.' });
   }
-  const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists) {
+  const foundUser = await User.findOne({ email: req.body.email });
+  if (foundUser) {
     res.json(400);
     throw new Error('Email already exist');
   }
@@ -49,4 +49,9 @@ exports.signin = asyncHandler(async (req, res) => {
     const { _id, email, username } = user;
     return res.json({ token, user: { _id, email, username } });
   });
+});
+
+exports.signout = asyncHandler(async (req, res) => {
+  res.clearCookie('t');
+  res.json({ success: true, message: 'Signout success' });
 });
