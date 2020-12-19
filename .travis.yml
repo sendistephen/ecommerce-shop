@@ -5,6 +5,8 @@ services:
   - mongodb
 before_script:
   - npm install
+  - mongo ecommece_testdb --eval 'db.createUser({user:"Stephen",pwd:"root",roles:["readWrite"]});'
+
 script:
   - npm run test
 cache:
