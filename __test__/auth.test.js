@@ -2,6 +2,8 @@
 /* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const faker = require('faker');
+const mongoose = require('mongoose');
 const { expect } = chai;
 const server = require('../server');
 const User = require('../models/user');
@@ -11,28 +13,34 @@ process.env.NODE_ENV = 'test';
 
 describe('Auth', () => {
   // before each test we empty the database
-  beforeEach(async () => {
-    await User.deleteMany({});
+  beforeEach('Dropping database', done => {
+    User.deleteMany({});
+    done();
   });
 
-  afterEach(async () => {
+  afterEach(done => {
     server.close();
 
-    await User.deleteMany({});
+    User.deleteMany({});
+    done();
   });
 
   describe('/POST', () => {
-    it('should register user if valid information is provided', async () => {
+    it('should register user if valid information is provided', done => {
       const user = {
         username: 'Ssendikadiwa',
         email: 'ssendikadiwa@example.com',
         password: 'itssecret20',
       };
-      const response = await chai
+      chai
         .request(server)
         .post('/api/v1/auth/signup')
-        .send(user);
-      expect(response.status).to.equal(200);
+        .send(user)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          //   expect(res.body).to.be.an('object');
+          done();
+        });
     });
   });
 });
