@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - '14.2.0'
+services:
+  - mongodb
+before_script:
+  - npm install
+  - mongo ecommece_testdb --eval 'db.createUser({user:"Stephen",pwd:"root",roles:["readWrite"]});'
+
+script:
+  - npm run test
+cache:
+  directories:
+    - node_modules

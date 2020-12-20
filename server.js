@@ -21,6 +21,10 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors());
 
+if (!process.env.NODE_ENV === 'test') {
+  app.use(morgan('dev'));
+}
+
 // mount routes
 app.use('/api/v1', require('./routes/product'));
 app.use('/api/v1', require('./routes/category'));
@@ -40,3 +44,5 @@ process.on('unhandledRejection', (err, promise) => {
   // close server and exit process
   server.close(() => process.exit(1));
 });
+
+module.exports = server;
