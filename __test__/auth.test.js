@@ -13,16 +13,14 @@ process.env.NODE_ENV = 'test';
 
 describe('Auth', () => {
   // before each test we empty the database
-  beforeEach('Dropping database', done => {
-    User.deleteMany({});
-    done();
+  beforeEach('Dropping database', async () => {
+    await User.deleteMany({});
   });
 
-  afterEach(done => {
+  afterEach(async () => {
     server.close();
 
-    User.deleteMany({});
-    done();
+    await User.deleteMany({});
   });
 
   describe('/POST', () => {
