@@ -19,8 +19,8 @@ describe('Auth', () => {
 
   afterEach(async () => {
     server.close();
-
     await User.deleteMany({});
+    mongoose.disconnect();
   });
 
   describe('/POST', () => {
