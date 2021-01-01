@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout 1000 __test__/**/*.test.js"
-
+    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 10000 __test__/**/*.test.js --exit",
+    "coverage":"nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -54,7 +54,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.2.0",
     "eslint-plugin-promise": "^4.2.1",
-    "faker": "^5.1.0",
     "mocha": "^8.2.1",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.1.0",
@@ -66,6 +65,11 @@
       "models/**/*.js",
       "__tests__",
       "node_modules"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "html"
     ],
     "cache": false,
     "report-dir": "./__tests__/report"

@@ -40,7 +40,8 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-
+nyc_output/
+__tests__/report
 # TypeScript v1 declaration files
 typings/
 
