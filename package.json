@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha --timeout 10000 __test__/**/*.test.js --exit",
-    "coverage":"nyc report --reporter=text-lcov | coveralls"
+    "test": "cross-env NODE_ENV=test nyc mocha --timeout 10000 __test__/**/*.test.js --exit",
+    "coverage":" nyc --reporter=html --reporter=text npm test"
   },
   "repository": {
     "type": "git",
