@@ -3,12 +3,19 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 exports.create = asyncHandler(async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    res.json({ success: false, message: 'Please enter email and password.' });
+  if (!req.body.email) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please enter valid email' });
+  }
+  if (!req.body.password) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please enter password' });
   }
   const foundUser = await User.findOne({ email: req.body.email });
   if (foundUser) {
-    res.json(400);
+    res.status(500);
     throw new Error('Email already exist');
   }
 
@@ -20,7 +27,7 @@ exports.create = asyncHandler(async (req, res) => {
 
   await user.save((err, user) => {
     if (err) {
-      res.status(400).json({ error: 'Something went wrong' });
+      return res.status(400).json({ error: 'Something went wrong' });
     }
     user.salt = undefined;
     user.hashed_password = undefined;
