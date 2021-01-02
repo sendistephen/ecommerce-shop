@@ -6,10 +6,11 @@ module.exports = {
     es6: true,
     mocha: true,
   },
+  parser: 'babel-eslint',
   extends: ['airbnb', 'prettier'],
   plugins: ['prettier'],
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2017,
   },
   ecmaFeatures: {
     experimentalObjectRestSpread: true,
