@@ -15,7 +15,7 @@ exports.create = asyncHandler(async (req, res) => {
   }
   const foundUser = await User.findOne({ email: req.body.email });
   if (foundUser) {
-    res.status(500);
+    res.status(400);
     throw new Error('Email already exist');
   }
 
@@ -27,7 +27,8 @@ exports.create = asyncHandler(async (req, res) => {
 
   await userObject.save((err, user) => {
     if (err) {
-      return res.status(500).json({ error: 'Something went wrong' });
+      res.status(500);
+      throw new Error('Something went wrong');
     }
     user.salt = undefined;
     user.hashed_password = undefined;
@@ -53,6 +54,7 @@ exports.signin = asyncHandler(async (req, res) => {
     // persist token in cookie
     res.cookie('t', token, { expire: new Date() + 9999 });
     // return response
+    const { _id, username } = user;
     return res.json({ token, user: { _id, email, username } });
   });
 });

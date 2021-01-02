@@ -7,11 +7,19 @@ chai.use(chaiHttp);
 
 process.env.NODE_ENV = 'test';
 
+let dummyUser;
+
 describe('AUTH', () => {
   before(async () => {
     await User.deleteMany({});
+    // create new user dummy object
+    dummyUser = {
+      username: 'sendi',
+      email: 'sendii@gmail.com',
+      password: 'secretss',
+    };
+    await new User(dummyUser).save();
   });
-
   after(async () => {
     server.close();
     await User.deleteMany({});
@@ -48,7 +56,7 @@ describe('AUTH', () => {
       .request(server)
       .post('/api/v1/auth/signup')
       .send(user);
-    expect(response.status).to.equal(500);
+    expect(response.status).to.equal(400);
   });
   it('Should return 400 error if email is not provided', async () => {
     const response = await chai
@@ -63,5 +71,36 @@ describe('AUTH', () => {
       .post('/api/v1/auth/signup')
       .send({ username: 'Stephen', email: 'stephen@test.com', password: '' });
     expect(response.status).to.equal(400);
+  });
+  it('Should login in user successfully', async () => {
+    const response = await chai
+      .request(server)
+      .post('/api/v1/auth/signin')
+      .send({ email: dummyUser.email, password: dummyUser.password });
+    expect(response.status).to.equal(200);
+    expect(response.body).to.have.property('token');
+  });
+  it('Should return 400 if user email is not known on signin', async () => {
+    const response = await chai
+      .request(server)
+      .post('/api/v1/auth/signin')
+      .send({ email: 'sendi1@gmail.com', password: dummyUser.password });
+    expect(response.status).to.equal(400);
+  });
+  it('Should return 401 if user enters wrong password', async () => {
+    const response = await chai
+      .request(server)
+      .post('/api/v1/auth/signin')
+      .send({ email: dummyUser.email, password: 'dummyUser.password' });
+    expect(response.status).to.equal(401);
+    expect(response.body.error).to.equal('Email or password is incorrect');
+  });
+  it('Should signout user successfully', async () => {
+    const response = await chai
+      .request(server)
+      .post('/api/v1/auth/signout')
+      .send({});
+    expect(response.status).to.equal(200);
+    expect(response.body.message).to.equal('Signout success');
   });
 });
