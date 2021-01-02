@@ -1,5 +1,3 @@
-/* eslint-disable node/handle-callback-err */
-/* eslint-disable no-undef */
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { expect } = chai;

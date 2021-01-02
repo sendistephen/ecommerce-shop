@@ -24,9 +24,8 @@ exports.list = asyncHandler(async (req, res, next) => {
   await Product.find({}).exec((err, data) => {
     if (err) {
       return next(err);
-    } else {
-      res.json(data);
     }
+    res.json(data);
   });
 });
 
@@ -56,7 +55,7 @@ exports.update = asyncHandler(async (req, res, next) => {
 });
 
 // get single product
-exports.getProductById = asyncHandler(async (req, res, next) => {
+exports.getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.productId);
   if (!product) {
     res.status(404);

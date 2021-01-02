@@ -35,9 +35,8 @@ exports.update = asyncHandler(async (req, res, next) => {
     await category.save((err, result) => {
       if (err) {
         return next(err);
-      } else {
-        res.json(result);
       }
+      res.json(result);
     });
   } else {
     res.status(404);
@@ -50,7 +49,7 @@ exports.remove = asyncHandler(async (req, res, next) => {
   // find a category by id
   const category = await Category.findById(req.params.id);
   if (category) {
-    await category.remove((err, result) => {
+    await category.remove(err => {
       if (err) {
         return next(err);
       }
@@ -67,8 +66,7 @@ exports.list = asyncHandler(async (req, res, next) => {
   await Category.find({}).exec((err, data) => {
     if (err) {
       return next(err);
-    } else {
-      res.json(data);
     }
+    res.json(data);
   });
 });

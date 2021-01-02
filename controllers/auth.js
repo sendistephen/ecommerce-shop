@@ -1,6 +1,6 @@
+const jwt = require('jsonwebtoken');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
 
 exports.create = asyncHandler(async (req, res) => {
   if (!req.body.email) {
@@ -19,13 +19,13 @@ exports.create = asyncHandler(async (req, res) => {
     throw new Error('Email already exist');
   }
 
-  const user = new User();
-  user.username = req.body.username;
-  user.email = req.body.email;
-  user.password = req.body.password;
-  user.address = req.body.address;
+  const userObject = new User();
+  userObject.username = req.body.username;
+  userObject.email = req.body.email;
+  userObject.password = req.body.password;
+  userObject.address = req.body.address;
 
-  await user.save((err, user) => {
+  await userObject.save((err, user) => {
     if (err) {
       return res.status(500).json({ error: 'Something went wrong' });
     }
@@ -53,7 +53,6 @@ exports.signin = asyncHandler(async (req, res) => {
     // persist token in cookie
     res.cookie('t', token, { expire: new Date() + 9999 });
     // return response
-    const { _id, email, username } = user;
     return res.json({ token, user: { _id, email, username } });
   });
 });
