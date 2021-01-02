@@ -27,7 +27,7 @@ exports.create = asyncHandler(async (req, res) => {
 
   await user.save((err, user) => {
     if (err) {
-      return res.status(400).json({ error: 'Something went wrong' });
+      return res.status(500).json({ error: 'Something went wrong' });
     }
     user.salt = undefined;
     user.hashed_password = undefined;
