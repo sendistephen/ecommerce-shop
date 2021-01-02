@@ -31,7 +31,7 @@ exports.list = asyncHandler(async (req, res, next) => {
 });
 
 // delete owner
-exports.remove = asyncHandler(async (req, res, next) => {
+exports.remove = asyncHandler(async (req, res) => {
   const owner = await Owner.findById(req.params.ownerId);
   if (!owner) {
     res.status(400);

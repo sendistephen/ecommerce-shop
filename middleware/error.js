@@ -1,7 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 
 // custom express error middleware for handling errors
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
   let error = { ...err };
   error.message = err.message;
 

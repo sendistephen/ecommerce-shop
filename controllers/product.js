@@ -24,9 +24,8 @@ exports.list = asyncHandler(async (req, res, next) => {
   await Product.find({}).exec((err, data) => {
     if (err) {
       return next(err);
-    } else {
-      res.json(data);
     }
+    res.json(data);
   });
 });
 
