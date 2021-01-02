@@ -1,14 +1,31 @@
 language: node_js
+
 node_js:
   - '14.2.0'
+
 services:
   - mongodb
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=820811fcf4dfc55d40ab5aea81f2e67232d2fdd05ba91e2fd5d1151cdd166c89
+
 before_script:
-  - npm install
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
+  - npm install
   - npm run test
+  - npm run coveralls
+
+after_script:  
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 cache:
   directories:
     - node_modules
+
 after_success:
-    -npm run coverage
+    - nyc report --reporter=text-lcov | coveralls
