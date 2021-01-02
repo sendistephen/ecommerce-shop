@@ -55,7 +55,7 @@ exports.update = asyncHandler(async (req, res, next) => {
 });
 
 // get single product
-exports.getProductById = asyncHandler(async (req, res, next) => {
+exports.getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.productId);
   if (!product) {
     res.status(404);
