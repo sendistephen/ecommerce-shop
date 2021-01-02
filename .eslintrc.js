@@ -9,7 +9,7 @@ module.exports = {
   extends: ['standard', 'prettier'],
   plugins: ['prettier'],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 2017,
   },
   rules: {
     'prettier/prettier': 'error',
