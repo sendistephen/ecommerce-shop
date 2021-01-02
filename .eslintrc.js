@@ -2,7 +2,9 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    es2021: true,
+    node: true,
+    es6: true,
+    mocha: true,
   },
   extends: ['standard', 'prettier'],
   plugins: ['prettier'],
