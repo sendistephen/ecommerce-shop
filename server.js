@@ -29,6 +29,7 @@ if (!process.env.NODE_ENV === 'test') {
 app.use('/api/v1', require('./routes/product'));
 app.use('/api/v1', require('./routes/category'));
 app.use('/api/v1', require('./routes/owner'));
+app.use('/api/v1', require('./routes/address'));
 app.use('/api/v1', require('./routes/auth'));
 
 // error middleware

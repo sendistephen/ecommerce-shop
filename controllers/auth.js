@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const expressJWT = require('express-jwt');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/user');
 
@@ -50,9 +51,11 @@ exports.signin = asyncHandler(async (req, res) => {
       return res.status(401).json({ error: 'Email or password is incorrect' });
     }
     // generate token
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
     // persist token in cookie
-    res.cookie('t', token, { expire: new Date() + 9999 });
+    res.cookie('t', token, { expire: '1d' });
     // return response
     const { _id, username } = user;
     return res.json({ token, user: { _id, email, username } });
@@ -62,4 +65,9 @@ exports.signin = asyncHandler(async (req, res) => {
 exports.signout = asyncHandler(async (req, res) => {
   res.clearCookie('t');
   res.json({ success: true, message: 'Signout success' });
+});
+
+exports.isProtected = expressJWT({
+  secret: process.env.JWT_SECRET,
+  algorithms: ['HS256'],
 });
