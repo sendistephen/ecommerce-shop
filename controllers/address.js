@@ -25,3 +25,12 @@ exports.create = asyncHandler(async (req, res) => {
     res.json(address);
   });
 });
+
+exports.list = asyncHandler(async (req, res) => {
+  await Address.find().exec((err, addresses) => {
+    if (err) {
+      return res.status(400).json({ error: 'Addresses not found' });
+    }
+    res.json(addresses);
+  });
+});
