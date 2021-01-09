@@ -16,7 +16,7 @@ databaseConnection();
 
 // app middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors());
@@ -30,6 +30,8 @@ app.use('/api/v1', require('./routes/product'));
 app.use('/api/v1', require('./routes/category'));
 app.use('/api/v1', require('./routes/owner'));
 app.use('/api/v1', require('./routes/address'));
+app.use('/api/v1', require('./routes/review'));
+app.use('/api/v1', require('./routes/country'));
 app.use('/api/v1', require('./routes/auth'));
 
 // error middleware
