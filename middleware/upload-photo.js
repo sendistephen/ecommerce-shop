@@ -8,7 +8,7 @@ aws.config.update({
   accessKeyId: process.env.AWSAccessKey,
 });
 
-const s3 = new aws.S3();
+const s3 = new aws.S3({});
 
 // Now lets’s create a function that validates the file type:
 const fileFilter = (req, file, cb) => {
