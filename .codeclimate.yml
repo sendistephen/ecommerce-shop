@@ -5,6 +5,10 @@ engines:
       languages: -javascript
   eslint:
     enabled: true
+    config:
+    extensions:
+      - .es6
+      - .js
     checks:
       similar-code:
         enabled: false
