@@ -3,7 +3,8 @@ const Product = require('../models/product');
 
 exports.create = asyncHandler(async (req, res, next) => {
   const product = new Product();
-
+  product.owner = req.body.ownerId;
+  product.category = req.body.categoryId;
   product.title = req.body.title;
   product.description = req.body.description;
   product.photo = req.file.location;
@@ -21,12 +22,15 @@ exports.create = asyncHandler(async (req, res, next) => {
 
 // Get all products
 exports.list = asyncHandler(async (req, res, next) => {
-  await Product.find({}).exec((err, data) => {
-    if (err) {
-      return next(err);
-    }
-    res.json(data);
-  });
+  await Product.find({})
+    .populate('owner category')
+    .populate('reviews', 'rating')
+    .exec((err, data) => {
+      if (err) {
+        return next(err);
+      }
+      res.json(data);
+    });
 });
 
 // update product
