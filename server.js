@@ -32,6 +32,7 @@ app.use('/api/v1', require('./routes/owner'));
 app.use('/api/v1', require('./routes/address'));
 app.use('/api/v1', require('./routes/review'));
 app.use('/api/v1', require('./routes/country'));
+app.use('/api/v1', require('./routes/payment'));
 app.use('/api/v1', require('./routes/auth'));
 
 // error middleware
